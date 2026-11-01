@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>BakiFace usa la cámara para deformar tus rasgos en directo. La imagen no sale de tu teléfono.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>BakiFace guarda en tu galería las fotos que decides guardar.</string>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+</dict>
+</plist>

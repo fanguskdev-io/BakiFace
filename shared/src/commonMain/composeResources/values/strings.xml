@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BakiFace</string>
+
+    <string name="camera_flip">Cambiar de cámara</string>
+    <string name="camera_frame_rate">%1$d fps</string>
+    <string name="camera_gallery">Elegir una foto</string>
+    <string name="camera_all_effects">Todos los personajes</string>
+    <string name="camera_shutter">Hacer la foto con %1$s</string>
+    <string name="camera_shutter_plain">Hacer la foto sin efecto</string>
+    <string name="camera_preview_description">Tu cámara con el efecto de %1$s</string>
+    <string name="camera_preview_plain_description">Tu cámara, sin efecto</string>
+    <string name="hint_open_mouth">Abre la boca</string>
+    <string name="hint_find_face">Mira a la cámara</string>
+
+    <string name="permission_title">BakiFace necesita la cámara</string>
+    <string name="permission_body">Deforma tus rasgos en directo para que te parezcas a cada personaje. La imagen no sale de tu teléfono.</string>
+    <string name="permission_allow">Permitir la cámara</string>
+    <string name="permission_denied_body">La cámara está desactivada para BakiFace. Actívala en Ajustes para usar los efectos en directo.</string>
+    <string name="permission_open_settings">Abrir Ajustes</string>
+    <string name="camera_unavailable_title">No hay cámara disponible</string>
+    <string name="camera_unavailable_body">Puedes aplicar los efectos a una foto de tu galería.</string>
+    <string name="camera_failed_title">La cámara no ha arrancado</string>
+    <string name="camera_failed_body">Cierra otras apps que la estén usando y vuelve a intentarlo.</string>
+    <string name="camera_retry">Reintentar</string>
+
+    <string name="message_capture_failed">La foto no se ha podido hacer. Vuelve a intentarlo.</string>
+    <string name="message_import_unreadable">Esa imagen no se puede abrir. Elige otra foto.</string>
+    <string name="message_import_failed">La foto no se ha podido cargar. Vuelve a intentarlo.</string>
+    <string name="message_catalog_failed">Los personajes no se han podido cargar.</string>
+
+    <string name="editor_close">Cerrar</string>
+    <string name="editor_save">Guardar</string>
+    <string name="editor_share">Compartir</string>
+    <string name="editor_intensity">Intensidad</string>
+    <string name="editor_intensity_value">%1$d %</string>
+    <string name="editor_saved">Guardada en tu galería</string>
+    <string name="editor_save_failed">La foto no se ha guardado. Comprueba que queda espacio y vuelve a intentarlo.</string>
+    <string name="editor_save_denied">BakiFace no tiene permiso para guardar en tu galería. Actívalo en Ajustes.</string>
+    <string name="editor_share_failed">La foto no se ha podido preparar para compartir.</string>
+    <string name="editor_no_face">No hay ninguna cara en esta foto: el efecto solo cambia el color.</string>
+    <string name="editor_missing_title">Esta foto ya no está</string>
+    <string name="editor_missing_body">Vuelve a la cámara para hacer otra.</string>
+    <string name="editor_back_to_camera">Volver a la cámara</string>
+    <string name="editor_photo_description">Foto con el efecto de %1$s</string>
+    <string name="editor_photo_plain_description">Foto sin efecto</string>
+
+    <string name="gallery_title">Personajes</string>
+    <string name="gallery_try">Probar</string>
+
+    <string name="effect_original_name">Tu cara</string>
+    <string name="effect_original_alias">Sin efecto</string>
+    <string name="effect_baki_alias">El campeón</string>
+    <string name="effect_baki_description">Mirada decidida, mandíbula firme y las marcas de mil combates.</string>
+    <string name="effect_yujiro_alias">El Ogro</string>
+    <string name="effect_yujiro_description">Cejas de furia, sonrisa de demonio y venas a punto de estallar. Abre la boca y verás.</string>
+    <string name="effect_jack_alias">El mordedor</string>
+    <string name="effect_jack_description">Una mandíbula descomunal y cicatrices cosidas. Abre la boca para morder.</string>
+    <string name="effect_hanayama_alias">El yakuza</string>
+    <string name="effect_hanayama_description">Cara ancha, mirada tranquila y cicatrices de cien peleas sin guantes.</string>
+    <string name="effect_oliva_alias">Mr. Unchained</string>
+    <string name="effect_oliva_description">Cuello de toro, cara ancha, bigote espeso y una sonrisa enorme.</string>
+    <string name="effect_doppo_alias">El tigre</string>
+    <string name="effect_doppo_description">Nariz ancha, mandíbula cuadrada y un ojo cerrado por una cicatriz.</string>
+    <string name="effect_retsu_alias">El maestro del kenpo</string>
+    <string name="effect_retsu_description">Rasgos afilados, pómulos altos y una mirada de halcón.</string>
+    <string name="effect_kaku_alias">El centenario</string>
+    <string name="effect_kaku_description">Más de un siglo en tu cara: arrugas, cejas largas y un bigote blanco.</string>
+    <string name="effect_pickle_alias">El hombre primitivo</string>
+    <string name="effect_pickle_description">Frente baja, cejas de piedra, nariz ancha y una mandíbula jurásica.</string>
+</resources>
