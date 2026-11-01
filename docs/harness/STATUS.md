@@ -21,15 +21,15 @@ actualizado: 2026-11-01
 
 ## Dónde estamos
 
-P0, la chispa. El 2026-11-01 se adoptó el arnés sobre la plantilla recién creada de Kotlin Multiplatform: el one-pager es un borrador con huecos; la ronda 1 dijo que el primer usuario es Fangusk, y la adopción espera la ronda 2, la última vez que quiso verse como un personaje de Baki. A la vez, porque Fangusk lo pidió («integra con mayeutic para el desarrollo», 2026-11-01), el agente construye la app como **borrador anticipado** (docs/07 §1 del arnés): el código y los ADR de [`docs/adr/`](../adr/README.md) existen antes de G4, los revisan las puertas que los piden y no deciden la talla, los criterios de muerte ni ninguna salida.
+P0, la chispa. El 2026-11-01 se adoptó el arnés sobre la plantilla recién creada de Kotlin Multiplatform: el one-pager es un borrador con huecos. En la ronda 1, Fangusk dijo que el primer usuario es él; en la 2, que la última vez que quiso verse como un personaje de Baki «no es relevante»: BakiFace es lo que él dice que tiene que hacer. Las rondas de descubrimiento quedan paradas por esa respuesta, con su cola escrita en el hilo. Sin una vez concreta del problema ni criterios de muerte, G0 no se puede revisar y el proyecto sigue en P0; el arnés sigue sirviendo al desarrollo (ADR, puerta de calidad y CI `mayeutic`). A la vez, porque Fangusk lo pidió («integra con mayeutic para el desarrollo», 2026-11-01), el agente construye la app como **borrador anticipado** (docs/07 §1 del arnés): el código y los ADR de [`docs/adr/`](../adr/README.md) existen antes de G4, los revisan las puertas que los piden y no deciden la talla, los criterios de muerte ni ninguna salida.
 
-**Siguiente paso:** que Fangusk conteste la ronda 2 de [entrevistas/one-pager-pending.md](entrevistas/one-pager-pending.md) (PU-E2).
+**Siguiente paso:** ninguno del arnés; el desarrollo sigue por orden de Fangusk. Si un día quiere revisar G0, se abre la primera ronda de la cola de [entrevistas/one-pager-pending.md](entrevistas/one-pager-pending.md).
 
 ## Qué se está haciendo
 
 | Qué | Dimensión | Quién | Desde | Estado |
 |---|---|---|---|---|
-| Adopción del arnés ([hilo](entrevistas/one-pager-pending.md)) | PU, PV, EE, EI | agente (Claude Code, Opus 5.5) | 2026-11-01 | `espera a Fangusk`: ronda 2 |
+| Adopción del arnés ([hilo](entrevistas/one-pager-pending.md)) | PU, PV, EE, EI | agente (Claude Code, Opus 5.5) | 2026-11-01 | `bloqueado por Fangusk`: en la ronda 2 dijo que las rondas de descubrimiento no son relevantes (2026-11-01) |
 | Borrador anticipado de la app: código, puerta de calidad y [ADR](../adr/README.md), pedido por Fangusk | AT | agente (Claude Code, Opus 5.5) | 2026-11-01 | `en curso`: la app completa compila y pasa la puerta en Android e iOS; falta verla en teléfonos reales con caras reales (R-03, R-05). `comprobar` avisa de que se escribió sin criterios de muerte confirmados (docs/07 §1 del arnés): Fangusk pidió construir ya, y el borrador no cuenta como evidencia de ninguna puerta hasta que confirme los del one-pager, cuya ronda está en cola |
 
 ## Equipo e hitos (EE)
@@ -43,7 +43,6 @@ P0, la chispa. El 2026-11-01 se adoptó el arnés sobre la plantilla recién cre
 
 | Entrevista | Para quién | Ronda abierta | Desde | Qué decide la respuesta |
 |---|---|---|---|---|
-| [La última vez que quisiste verte como un personaje de Baki](entrevistas/one-pager-pending.md) | Fangusk | 2 | 2026-11-01 | el problema del one-pager §3 en sus palabras y lo que usa hoy, con lo que se hace la ronda de contraste |
 
 ## Criterios de muerte vivos
 
@@ -59,7 +58,7 @@ P0, la chispa. El 2026-11-01 se adoptó el arnés sobre la plantilla recién cre
 
 | Dimensión | Nota provisional | Confianza | Fichero |
 |---|---|---|---|
-| PU | 0 · sin cerrar · PU-E1 contestada (Fangusk); falta la última vez, PU-E2 | baja | [one-pager §2](one-pager.md#2-el-usuario-con-nombre-pu) |
+| PU | 0 · sin cerrar · PU-E1 contestada (Fangusk); PU-E2 sin respuesta: el decisor la ve no relevante | baja | [one-pager §2](one-pager.md#2-el-usuario-con-nombre-pu) |
 | PV | 0 · sin cerrar · one-pager §1 | baja | [one-pager §1](one-pager.md#1-lo-que-creemos-pv) |
 | MC | 0 · sin cerrar · one-pager §6 | baja | [one-pager §6](one-pager.md#6-existe-ya-la-búsqueda-de-diez-minutos-mc) |
 | EE | 0 · sin cerrar · one-pager §7 | baja | [one-pager §7](one-pager.md#7-quién-lo-hace-y-con-cuánto-tiempo-ee) |
@@ -88,3 +87,4 @@ P0, la chispa. El 2026-11-01 se adoptó el arnés sobre la plantilla recién cre
 | 2026-11-01 | agente (Claude Code, Opus 5.5) | Adopción del arnés 1.4.0 en modo nuevo, con la ronda 1 abierta; borrador anticipado de la app pedido por Fangusk |
 | 2026-11-01 | agente (Claude Code, Opus 5.5) | Borrador anticipado: la app completa (cámara en vivo, nueve personajes, editor, guardar y compartir) con la puerta de calidad en verde en Android e iOS; ADR 0001–0010, `AGENTS.md` con el bloque del arnés, `docs/licencias.md`; contador de fotogramas para R-03 y R-05 nuevo en el registro de riesgos |
 | 2026-11-01 | agente (Claude Code, Opus 5.5) | Ronda 1 contestada: el primer usuario es Fangusk, que queda como decisor (también en el bloque de `AGENTS.md`); abierta la ronda 2 (PU-E2) |
+| 2026-11-01 | agente (Claude Code, Opus 5.5) | Ronda 2 contestada sin la vez concreta («No es relevante, expongo el caso de lo que tiene que hacer la app»): rondas de descubrimiento paradas por el decisor, cola escrita en el hilo; P0 sigue abierta |

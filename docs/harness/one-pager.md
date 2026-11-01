@@ -26,7 +26,7 @@ Hoy, quien quiere verse «como» un personaje de Baki sube una selfie a una plan
 
 > (hueco: la frase en palabras de ese usuario, que dice quien tuvo la idea; borrador del agente, supuesto: «Quiero verme como Yujiro, no pegar su cara encima de la mía»)
 
-- **La última vez:** (hueco: PU-E2, en cola). La búsqueda no encontró una queja pública que cuente una vez concreta (quién, cuándo, qué pasó): sin medir.
+- **La última vez:** (hueco: PU-E2 sin respuesta todavía: en la [ronda 2](entrevistas/one-pager-pending.md) el decisor dijo «No es relevante, expongo el caso de lo que tiene que hacer la app», 2026-11-01). La búsqueda no encontró una queja pública que cuente una vez concreta (quién, cuándo, qué pasó): sin medir.
 
 ## 4. Hipótesis: qué tendría que ser cierto
 

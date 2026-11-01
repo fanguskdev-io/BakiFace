@@ -36,9 +36,13 @@ La adopción del arnés (P0, hacia G0). Antes de preguntar se midió el reposito
 
 **Por qué te la hago:** de esa vez sale el problema del one-pager (§3) en tus palabras y lo que usas hoy, contra lo que se compara BakiFace en la ronda de contraste; una vez concreta, con fecha aproximada, es lo que pide G0.
 
-**Respuesta:** _(en blanco hasta que llega; se anota literal, con fecha)_
+**Respuesta:** «No es relevante, expongo el caso de lo que tiene que hacer la app» (2026-11-01)
+
+*No cumple el* Busca *de PU-E2 (una vez concreta, con fecha aproximada): queda en «Sin respuesta todavía», en el one-pager §3 (docs/03 §4, regla 1). No se abre la ronda más pequeña que pide esa regla, porque el decisor dice que estas rondas no son relevantes: BakiFace es lo que él dice que tiene que hacer. Las rondas de descubrimiento se paran aquí por esa respuesta (agente, 2026-11-01).*
 
 ## En cola
+
+*Parada por la respuesta del decisor a la ronda 2: no se abre ninguna de estas rondas mientras Fangusk no lo pida. Sin la vez concreta de PU-E2 y sin criterios de muerte, G0 no se puede revisar.*
 
 - PU-E8 · Qué te costó esa vez · solo si la de PU-E2 no lo dice
 - PU-E7 · Cada cuánto te pasa · su alarma lee el criterio del problema de G0
