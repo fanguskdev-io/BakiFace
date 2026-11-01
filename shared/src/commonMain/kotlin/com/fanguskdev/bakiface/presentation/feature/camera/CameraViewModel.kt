@@ -37,7 +37,9 @@ import kotlinx.coroutines.launch
  * go out through [effects], never through the state.
  *
  * The camera runs only while the screen is shown and the permission granted; it stops as soon as either goes. The
- * character remembered from the last time is restored once, unless the person has already chosen one.
+ * first time the screen is shown without an answer, the system is asked at once, so the selfie camera is the first
+ * thing the person sees (ADR 0011). The character remembered from the last time is restored once, unless the person
+ * has already chosen one.
  */
 class CameraViewModel(
     private val getEffects: GetEffectsUseCase,
@@ -57,6 +59,8 @@ class CameraViewModel(
     private val catalogue = MutableStateFlow<Map<EffectId, Effect>>(emptyMap())
     private var previewJob: Job? = null
     private var screenShown = false
+    private var permissionKnown = false
+    private var askedForPermission = false
     private var hasChosenEffect = false
 
     init {
@@ -76,14 +80,17 @@ class CameraViewModel(
     fun onIntent(intent: CameraIntent) {
         when (intent) {
             is CameraIntent.PermissionChanged -> {
+                permissionKnown = true
                 reduce(CameraResult.PermissionUpdated(intent.permission))
                 if (intent.permission == CameraPermission.Granted) startPreview() else stopPreview()
+                askAtOnce()
             }
             CameraIntent.RequestPermission -> send(CameraEffect.RequestCameraPermission)
             CameraIntent.OpenSettings -> send(CameraEffect.OpenAppSettings)
             CameraIntent.ScreenShown -> {
                 screenShown = true
                 startPreview()
+                askAtOnce()
             }
             CameraIntent.ScreenHidden -> {
                 screenShown = false
@@ -110,6 +117,13 @@ class CameraViewModel(
             CameraIntent.OpenGallery -> reduce(CameraResult.GalleryToggled(open = true))
             CameraIntent.CloseGallery -> reduce(CameraResult.GalleryToggled(open = false))
         }
+    }
+
+    /** Asks the system for the camera once, as soon as the screen is shown and the platform has said nobody asked yet. */
+    private fun askAtOnce() {
+        if (!screenShown || !permissionKnown || askedForPermission || state.value.permission != CameraPermission.Unknown) return
+        askedForPermission = true
+        send(CameraEffect.RequestCameraPermission)
     }
 
     private fun startPreview() {

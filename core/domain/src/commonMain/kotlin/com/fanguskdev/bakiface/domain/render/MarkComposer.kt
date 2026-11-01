@@ -4,6 +4,7 @@ import com.fanguskdev.bakiface.domain.effect.Argb
 import com.fanguskdev.bakiface.domain.effect.FeaturePoint
 import com.fanguskdev.bakiface.domain.effect.MarkBlend
 import com.fanguskdev.bakiface.domain.effect.MarkSpec
+import com.fanguskdev.bakiface.domain.face.EyeShape
 import com.fanguskdev.bakiface.domain.face.FaceGeometry
 import com.fanguskdev.bakiface.domain.geometry.Point
 import com.fanguskdev.bakiface.domain.geometry.lerp
@@ -13,10 +14,20 @@ import kotlinx.collections.immutable.toImmutableList
 import kotlin.math.PI
 import kotlin.math.atan2
 import kotlin.math.cos
+import kotlin.math.min
+import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.random.Random
 
 private const val SAMPLES_PER_SEGMENT = 6
+private const val FOLD_MIN_WIDTH = 0.009f
+private const val FOLD_DEPTH_WIDTH = 0.014f
+private const val LIGHT_SIDEWAYS = 0.6f
+private const val BLANK_EYE_UPPER = 1.35f
+private const val BLANK_EYE_LOWER = 1.05f
+private const val BLANK_EYE_SHADE_LINE = 0.35f
+private const val TAPER_POWER = 0.7f
+private const val EYE_ARC_STEPS = 10
 private const val MAX_POWER = 1.6f
 private const val DEGREES_PER_RADIAN = 180f / PI.toFloat()
 
@@ -29,6 +40,10 @@ private val VEIN = Argb(0xFF4E3A55L)
 private val VEIN_SHADOW = Argb(0xFF5A2E26L)
 private val HIGHLIGHT = Argb(0xFFFFFFFFL)
 private val WRINKLE = Argb(0xFF5E4030L)
+private val FOLD_CREASE = Argb(0xFF2E160EL)
+private val FOLD_SHADOW = Argb(0xFF5A3424L)
+private val LID_SHADOW = Argb(0xFF3A2620L)
+private val EYE_SHADE = Argb(0xFF8C8580L)
 
 /**
  * Turns the [MarkSpec]s of an effect into [SkinMark]s on one face (ADR 0005): each path is resolved from the features,
@@ -57,6 +72,9 @@ internal class MarkComposer(private val geometry: FaceGeometry, private val fiel
         is MarkSpec.Wrinkle -> wrinkle(spec, mirror, power)
         is MarkSpec.Shade -> listOf(shade(spec, mirror, power))
         is MarkSpec.Hair -> hair(spec, mirror, power, seed)
+        is MarkSpec.Folds -> folds(spec, power, seed)
+        is MarkSpec.BlankEyes -> blankEyes(spec, power)
+        is MarkSpec.InkBrows -> inkBrows(spec, power)
     }
 
     /**
@@ -116,7 +134,7 @@ internal class MarkComposer(private val geometry: FaceGeometry, private val fiel
             SkinMark.Line(image, spec.width * 2.4f * unit, VEIN_SHADOW, 0.12f * power, MarkBlend.Multiply),
             SkinMark.Line(image, spec.width * 1.35f * unit, VEIN_SHADOW, 0.18f * power, MarkBlend.Multiply),
             SkinMark.Line(image, spec.width * 0.7f * unit, VEIN, 0.28f * power, MarkBlend.Multiply),
-            SkinMark.Line(lit, spec.width * 0.32f * unit, HIGHLIGHT, 0.24f * power, MarkBlend.Screen),
+            SkinMark.Line(lit, spec.width * 0.32f * unit, HIGHLIGHT, 0.12f * power, MarkBlend.Screen),
         )
     }
 
@@ -183,41 +201,123 @@ internal class MarkComposer(private val geometry: FaceGeometry, private val fiel
         }
     }
 
-    /** The resolved path, rounded through its points with a Catmull-Rom spline. */
-    private fun smoothPath(points: ImmutableList<FeaturePoint>, mirror: Boolean): List<Point> {
-        val anchors = points.map { geometry.resolve(it, mirror) }
-        if (anchors.size < 3) return anchors
-        val samples = mutableListOf<Point>()
-        for (index in 0 until anchors.size - 1) {
-            val before = anchors[(index - 1).coerceAtLeast(0)]
-            val start = anchors[index]
-            val end = anchors[index + 1]
-            val after = anchors[(index + 2).coerceAtMost(anchors.size - 1)]
-            for (step in 0 until SAMPLES_PER_SEGMENT) {
-                samples += catmullRom(before, start, end, after, step / SAMPLES_PER_SEGMENT.toFloat())
-            }
+    /**
+     * The folds of a region (ADR 0011), each carved in four strokes that taper to a point at both ends: a soft shadow
+     * falling away from the light, the thin dark crease, the broad light on the swell of skin beside it and the bright
+     * lip of the fold. The light comes from above and from outside the face, the same for every fold, so a crease never
+     * changes its lit side halfway along.
+     */
+    private fun folds(spec: MarkSpec.Folds, power: Float, seed: Int): List<SkinMark> {
+        val depth = spec.depth.coerceIn(0f, 1f)
+        val width = FOLD_MIN_WIDTH + FOLD_DEPTH_WIDTH * depth
+        return FoldLayout.paths(geometry, spec.region, spec.count, seed).filter { it.size >= 2 }.flatMap { path ->
+            val outwards = if (path.sumOf { it.x.toDouble() } < 0.0) -1f else 1f
+            val light = Point(outwards * LIGHT_SIDEWAYS, -1f).normalized()
+            listOf(
+                ribbon(
+                    offsetTowards(path, light, -width * 1.2f),
+                    width * 3.6f,
+                    FOLD_SHADOW,
+                    (0.09f + 0.1f * depth) * power,
+                    MarkBlend.Multiply,
+                ),
+                ribbon(path, width, FOLD_CREASE, (0.38f + 0.37f * depth) * power, MarkBlend.Multiply),
+                ribbon(
+                    offsetTowards(path, light, width * 2.2f),
+                    width * 3.2f,
+                    HIGHLIGHT,
+                    (0.05f + 0.08f * depth) * power,
+                    MarkBlend.Screen,
+                ),
+                ribbon(
+                    offsetTowards(path, light, width * 1.0f),
+                    width * 0.8f,
+                    HIGHLIGHT,
+                    (0.06f + 0.09f * depth) * power,
+                    MarkBlend.Screen,
+                ),
+            )
         }
-        samples += anchors.last()
-        return samples
     }
 
-    private fun catmullRom(
-        p0: Point,
-        p1: Point,
-        p2: Point,
-        p3: Point,
-        t: Float,
-    ): Point {
-        val t2 = t * t
-        val t3 = t2 * t
-        fun axis(
-            a: Float,
-            b: Float,
-            c: Float,
-            d: Float,
-        ): Float = 0.5f * (2f * b + (-a + c) * t + (2f * a - 5f * b + 4f * c - d) * t2 + (-a + 3f * b - 3f * c + d) * t3)
-        return Point(axis(p0.x, p1.x, p2.x, p3.x), axis(p0.y, p1.y, p2.y, p3.y))
+    /** The path moved sideways by [distance] (units of the face), towards the side [light] comes from for a positive one. */
+    private fun offsetTowards(path: List<Point>, light: Point, distance: Float): List<Point> = path.mapIndexed { index, point ->
+        val tangent = (path[(index + 1).coerceAtMost(path.size - 1)] - path[(index - 1).coerceAtLeast(0)]).normalized()
+        val normal = Point(-tangent.y, tangent.x).let { if ((it dot light) < 0f) it * -1f else it }
+        point + normal * distance
     }
+
+    /**
+     * Each eye filled from lid to lid, rolled back: the white, the shade the upper lid casts over its top half and the
+     * two lids drawn over it, so it still sits in its socket.
+     */
+    private fun blankEyes(spec: MarkSpec.BlankEyes, power: Float): List<SkinMark> =
+        listOf(geometry.leftEye, geometry.rightEye).flatMap { eye ->
+            val upper = eyeArc(eye, lift = BLANK_EYE_UPPER)
+            val lower = eyeArc(eye, lift = -BLANK_EYE_LOWER)
+            val middle = eyeArc(eye, lift = BLANK_EYE_SHADE_LINE)
+            fun image(points: List<Point>) = points.map(field::warpToImage).toImmutableList()
+            listOf(
+                SkinMark.Fill(image(upper + lower.asReversed()), spec.color, (spec.alpha * power).coerceIn(0f, 1f), MarkBlend.Normal),
+                SkinMark.Fill(image(upper + middle.asReversed()), EYE_SHADE, (0.42f * power).coerceIn(0f, 1f), MarkBlend.Multiply),
+                SkinMark.Line(image(upper), 0.045f * unit, LID_SHADOW, (0.6f * power).coerceIn(0f, 1f), MarkBlend.Multiply),
+                SkinMark.Line(image(lower), 0.022f * unit, LID_SHADOW, (0.35f * power).coerceIn(0f, 1f), MarkBlend.Multiply),
+            )
+        }
+
+    /**
+     * Each brow as one stroke of ink, thickest at its inner end and thinning to a point outwards: painted at half its
+     * strength and multiplied at the rest, so the hairs under it still show through the ink.
+     */
+    private fun inkBrows(spec: MarkSpec.InkBrows, power: Float): List<SkinMark> =
+        listOf(geometry.leftBrow, geometry.rightBrow).flatMap { brow ->
+            val path = smoothThrough(listOf(brow.inner, brow.middle, brow.outer), SAMPLES_PER_SEGMENT)
+            val shape = outline(path) { t -> spec.width * 0.5f * (1f - 0.65f * t) * (0.35f + 0.65f * min(1f, t / 0.12f)) }
+            val alpha = (spec.alpha * power).coerceIn(0f, 1f)
+            listOf(
+                SkinMark.Fill(shape, spec.color, alpha * 0.5f, MarkBlend.Normal),
+                SkinMark.Fill(shape, spec.color, alpha, MarkBlend.Multiply),
+            )
+        }
+
+    /** One side of an eye, from its inner corner to its outer one, [lift] times its half height above (or below) the corners. */
+    private fun eyeArc(eye: EyeShape, lift: Float): List<Point> = (0..EYE_ARC_STEPS).map { step ->
+        val t = step / EYE_ARC_STEPS.toFloat()
+        lerp(eye.inner, eye.outer, t) + Point(0f, -lift * eye.halfHeight * sin(PI.toFloat() * t))
+    }
+
+    /** A stroke along [path], [width] wide in its middle and pointed at both ends. */
+    private fun ribbon(
+        path: List<Point>,
+        width: Float,
+        color: Argb,
+        alpha: Float,
+        blend: MarkBlend,
+    ): SkinMark = SkinMark.Fill(outline(path) { t -> width * 0.5f * taper(t) }, color, alpha.coerceIn(0f, 1f), blend)
+
+    /**
+     * How wide a stroke is a fraction [t] of its length along: nothing at the ends, all of it in the middle. The sine is
+     * kept from going below zero, where a float rounds sin(π): a negative power is NaN, and one NaN corner makes the
+     * whole shape vanish.
+     */
+    private fun taper(t: Float): Float = sin(PI.toFloat() * t).coerceAtLeast(0f).pow(TAPER_POWER)
+
+    /** The closed outline, in picture pixels, of a stroke along [path] whose half width at a fraction t of its length is [halfWidth]. */
+    private fun outline(path: List<Point>, halfWidth: (Float) -> Float): ImmutableList<Point> {
+        val left = ArrayList<Point>(path.size)
+        val right = ArrayList<Point>(path.size)
+        path.forEachIndexed { index, point ->
+            val tangent = (path[(index + 1).coerceAtMost(path.size - 1)] - path[(index - 1).coerceAtLeast(0)]).normalized()
+            val normal = Point(-tangent.y, tangent.x) * halfWidth(index / (path.size - 1f))
+            left += field.warpToImage(point + normal)
+            right += field.warpToImage(point - normal)
+        }
+        return (left + right.asReversed()).toImmutableList()
+    }
+
+    /** The resolved path, rounded through its points with a Catmull-Rom spline. */
+    private fun smoothPath(points: ImmutableList<FeaturePoint>, mirror: Boolean): List<Point> =
+        smoothThrough(points.map { geometry.resolve(it, mirror) }, SAMPLES_PER_SEGMENT)
 
     /** The path moved sideways by [distance] (units of the face), towards the chin for a positive one. */
     private fun offsetPath(path: List<Point>, distance: Float): List<Point> = path.mapIndexed { index, point ->

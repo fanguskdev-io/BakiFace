@@ -70,8 +70,16 @@ class ScreensUiTest {
     }
 
     @Test
-    fun beforeAskingTheCameraTheReasonIsExplained() {
+    fun whileTheSystemAsksTheViewfinderWaitsWithoutAPanel() {
         camera(CameraUiState(permission = CameraPermission.Unknown))
+
+        compose.onNodeWithText("BakiFace necesita la cámara").assertDoesNotExist()
+        compose.onNodeWithText("Permitir la cámara").assertDoesNotExist()
+    }
+
+    @Test
+    fun aRefusalExplainsWhyAndAsksAgain() {
+        camera(CameraUiState(permission = CameraPermission.Denied))
 
         compose.onNodeWithText("BakiFace necesita la cámara").assertIsDisplayed()
         compose.onNodeWithText("Permitir la cámara").performClick()

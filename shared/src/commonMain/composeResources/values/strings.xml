@@ -51,21 +51,13 @@
     <string name="effect_original_name">Tu cara</string>
     <string name="effect_original_alias">Sin efecto</string>
     <string name="effect_baki_alias">El campeón</string>
-    <string name="effect_baki_description">Mirada decidida, mandíbula firme y las marcas de mil combates.</string>
+    <string name="effect_baki_description">Ojos en blanco, la cara tallada en pliegues y una sonrisa salvaje. Abre la boca y verás.</string>
     <string name="effect_yujiro_alias">El Ogro</string>
-    <string name="effect_yujiro_description">Cejas de furia, sonrisa de demonio y venas a punto de estallar. Abre la boca y verás.</string>
+    <string name="effect_yujiro_description">Ojos en blanco, cejas de tinta, sonrisa de demonio y venas a punto de estallar. Abre la boca y verás.</string>
     <string name="effect_jack_alias">El mordedor</string>
     <string name="effect_jack_description">Una mandíbula descomunal y cicatrices cosidas. Abre la boca para morder.</string>
     <string name="effect_hanayama_alias">El yakuza</string>
     <string name="effect_hanayama_description">Cara ancha, mirada tranquila y cicatrices de cien peleas sin guantes.</string>
     <string name="effect_oliva_alias">Mr. Unchained</string>
     <string name="effect_oliva_description">Cuello de toro, cara ancha, bigote espeso y una sonrisa enorme.</string>
-    <string name="effect_doppo_alias">El tigre</string>
-    <string name="effect_doppo_description">Nariz ancha, mandíbula cuadrada y un ojo cerrado por una cicatriz.</string>
-    <string name="effect_retsu_alias">El maestro del kenpo</string>
-    <string name="effect_retsu_description">Rasgos afilados, pómulos altos y una mirada de halcón.</string>
-    <string name="effect_kaku_alias">El centenario</string>
-    <string name="effect_kaku_description">Más de un siglo en tu cara: arrugas, cejas largas y un bigote blanco.</string>
-    <string name="effect_pickle_alias">El hombre primitivo</string>
-    <string name="effect_pickle_description">Frente baja, cejas de piedra, nariz ancha y una mandíbula jurásica.</string>
 </resources>

@@ -39,7 +39,8 @@ Cada fotograma pasa por la misma cadena, de la cámara a la pantalla:
    distancia entre ojos (entre 24 y 110 a lo largo del lado largo: unas 4 000 esquinas en 720p), y mueve sus esquinas.
    Se dibuja con `Canvas.drawBitmapMesh` en Android y con triángulos `drawVertices` de Skia en iOS.
 6. **Las marcas.** Se componen en el marco de la cara, se deforman con el mismo campo para seguir a los rasgos movidos y
-   se funden con multiplicar, trama o normal, para que parezcan piel y no pegatinas.
+   se funden con multiplicar, trama o normal, para que parezcan piel y no pegatinas. Desde ADR 0011 hay también
+   pliegues por regiones, ojos en blanco y cejas de tinta, dibujados como formas afiladas y rellenas.
 7. **La app dibuja los fotogramas.** CameraX entrega RGBA de 720p ya girado y AVFoundation BGRA de 1280 × 720; la app
    los pinta con el efecto, sin `PreviewView` ni capa de vista previa. Lo que se ve es lo que se captura: la foto es el
    fotograma visible, recortado como en pantalla.

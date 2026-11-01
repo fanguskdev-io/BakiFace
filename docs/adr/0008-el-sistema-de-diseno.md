@@ -20,8 +20,9 @@ el manga de lucha de Itagaki, impreso en tinta negra sobre papel de revista sema
   5,2:1, sangre oscura sobre tinta 5,8:1 y sobre `#1E1E1E` 4,6:1 (todos AA para texto normal). Cada personaje tiñe el
   papel de su panel con su color (`paperTint`).
 - **Tipografía.** Dela Gothic One (OFL) en títulos, el nombre del personaje y los sellos en kanji, en un subconjunto de
-  38 KB (latín, español y los kanji de los sellos: 刃 鬼 牙 侠 鎖 虎 烈 皇 原 素). El resto, en la letra del sistema, que es
-  la que mejor se lee pequeña.
+  38 KB (latín, español y los kanji de los sellos: 鬼 刃 牙 鎖 侠 素). Lleva también 虎 烈 皇 原, de los personajes que salieron
+  con ADR 0011; se quitan cuando se rehaga el subconjunto. El resto, en la letra del sistema, que es la que mejor se lee
+  pequeña.
 - **Forma.** Paneles casi cuadrados, como las viñetas (2–4 dp); solo la hoja que sube del borde es redonda. Trazos de
   tinta de 1, 2 y 3 dp; espacios en una rejilla de 4 dp.
 - **Motivos.** Trama de puntos, líneas de concentración y un sello en kanji por personaje. Al cambiar de personaje su

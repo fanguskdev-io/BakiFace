@@ -8,6 +8,7 @@ import com.fanguskdev.bakiface.domain.effect.Argb
 import com.fanguskdev.bakiface.domain.effect.CatalogError
 import com.fanguskdev.bakiface.domain.effect.EffectHint
 import com.fanguskdev.bakiface.domain.effect.Feature
+import com.fanguskdev.bakiface.domain.effect.FoldRegion
 import com.fanguskdev.bakiface.domain.effect.MarkBlend
 import com.fanguskdev.bakiface.domain.effect.MarkSpec
 import com.fanguskdev.bakiface.domain.effect.Sides
@@ -36,11 +37,8 @@ class ShippedCatalogTest {
     private val effects = assertNotNull(runTestResult(EFFECT_CATALOG_JSON).getOrNull())
 
     @Test
-    fun theNineCharactersAreThereInCarouselOrder() {
-        assertEquals(
-            listOf("baki", "yujiro", "jack", "hanayama", "oliva", "doppo", "retsu", "kaku", "pickle"),
-            effects.map { it.id.value },
-        )
+    fun theFiveCharactersAreThereInCarouselOrder() {
+        assertEquals(listOf("yujiro", "baki", "jack", "oliva", "hanayama"), effects.map { it.id.value })
     }
 
     @Test
@@ -54,8 +52,14 @@ class ShippedCatalogTest {
     }
 
     @Test
-    fun theOgreAndTheBiterReactToTheMouth() {
-        assertEquals(setOf("yujiro", "jack"), effects.filter { it.hint == EffectHint.OpenMouth }.map { it.id.value }.toSet())
+    fun theOgreTheChampionAndTheBiterReactToTheMouth() {
+        assertEquals(setOf("yujiro", "baki", "jack"), effects.filter { it.hint == EffectHint.OpenMouth }.map { it.id.value }.toSet())
+    }
+
+    @Test
+    fun everyCharacterIsCarvedInFoldsAndTheOgreAndTheChampionStareBlank() {
+        effects.forEach { effect -> assertTrue(effect.marks.any { it is MarkSpec.Folds }, "${effect.id} has the folds of the trend") }
+        assertEquals(setOf("yujiro", "baki"), effects.filter { e -> e.marks.any { it is MarkSpec.BlankEyes } }.map { it.id.value }.toSet())
     }
 
     @Test
@@ -69,13 +73,6 @@ class ShippedCatalogTest {
                 is WarpOp.Scale -> assertTrue(op.sx in 0.25f..2f && op.sy in 0.25f..2f, "$id: a scale of ${op.feature} folds the mesh")
             }
         }
-    }
-
-    @Test
-    fun doppoClosesOneEyeOnly() {
-        val doppo = effects.first { it.id.value == "doppo" }
-
-        assertEquals(Sides.Left, doppo.warp.filterIsInstance<WarpOp.Scale>().first { it.feature == Feature.Eye }.sides)
     }
 }
 
@@ -115,6 +112,35 @@ class EffectMapperTest {
         assertEquals(EffectHint.OpenMouth, effect.hint)
         assertEquals(Argb(0xFFFF0000L), effect.grade.tint)
         assertEquals(Argb(0xFF112233L), effect.accent)
+    }
+
+    @Test
+    fun theMarksOfTheTrendAreRead() {
+        val json = catalog(
+            effect(
+                marks = """
+                    { "type": "folds", "region": "crows_feet", "count": 4, "depth": 0.9, "boost": 0.3 },
+                    { "type": "blank_eyes", "color": "#F2EDE4", "alpha": 0.9 },
+                    { "type": "ink_brows", "width": 0.12, "color": "#140D0A", "alpha": 0.8 }
+                """,
+            ),
+        )
+
+        val marks = assertNotNull(runTestResult(json).getOrNull()).single().marks
+
+        assertEquals(MarkSpec.Folds(FoldRegion.CrowsFeet, count = 4, depth = 0.9f, mouthOpenBoost = 0.3f), marks[0])
+        assertEquals(MarkSpec.BlankEyes(Argb(0xFFF2EDE4L), alpha = 0.9f), marks[1])
+        assertEquals(MarkSpec.InkBrows(width = 0.12f, color = Argb(0xFF140D0AL), alpha = 0.8f), marks[2])
+    }
+
+    @Test
+    fun aTrendMarkThatCannotBeDrawnIsAnError() {
+        assertTrue("region «ear»" in invalidReason(catalog(effect(marks = """{ "type": "folds", "region": "ear", "count": 2 }"""))))
+        assertTrue("region «null»" in invalidReason(catalog(effect(marks = """{ "type": "folds", "count": 2 }"""))))
+        assertTrue("count «0»" in invalidReason(catalog(effect(marks = """{ "type": "folds", "region": "chin" }"""))))
+        assertTrue("color «null»" in invalidReason(catalog(effect(marks = """{ "type": "blank_eyes" }"""))))
+        assertTrue("width «0.0»" in invalidReason(catalog(effect(marks = """{ "type": "ink_brows", "color": "#000000" }"""))))
+        assertTrue("color «null»" in invalidReason(catalog(effect(marks = """{ "type": "ink_brows", "width": 0.1 }"""))))
     }
 
     @Test

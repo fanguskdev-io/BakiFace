@@ -25,7 +25,7 @@ y sus diálogos del sistema, detrás de las interfaces del dominio (ADR 0003). L
 
 | Alternativa | A favor | Por qué se descarta |
 |---|---|---|
-| Dos apps nativas (Compose + SwiftUI) | Lo más idiomático en cada una | El motor de deformación y los nueve personajes se escribirían y probarían dos veces |
+| Dos apps nativas (Compose + SwiftUI) | Lo más idiomático en cada una | El motor de deformación y los personajes se escribirían y probarían dos veces |
 | Flutter o React Native | Una UI común | El dueño ya eligió KMP; la cámara con dibujo por fotograma pide código nativo igualmente |
 
 ## Reversibilidad

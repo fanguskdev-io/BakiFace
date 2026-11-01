@@ -13,7 +13,7 @@ import kotlinx.collections.immutable.persistentListOf
 
 /** Whether the app may use the camera, as the platform last reported it. */
 enum class CameraPermission {
-    /** Not asked yet: the screen explains before the system asks. */
+    /** Not asked yet: the system asks as soon as the screen is shown, over the black viewfinder (ADR 0011). */
     Unknown,
     Granted,
 

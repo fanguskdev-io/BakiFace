@@ -43,6 +43,14 @@ sealed interface SkinMark {
         override val blend: MarkBlend,
     ) : SkinMark
 
+    /** A closed shape through [points], filled: a tapered crease, a blank eye, a stroke of ink. */
+    data class Fill(
+        val points: ImmutableList<Point>,
+        override val color: Argb,
+        override val alpha: Float,
+        override val blend: MarkBlend,
+    ) : SkinMark
+
     /** A soft oval, opaque at the [center] and gone at its edge, turned [angleDegrees]. */
     data class Spot(
         val center: Point,

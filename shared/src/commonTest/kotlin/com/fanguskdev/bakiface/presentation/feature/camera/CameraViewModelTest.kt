@@ -238,6 +238,36 @@ class CameraViewModelTest {
     }
 
     @Test
+    fun theFirstTimeTheSystemIsAskedForTheCameraAtOnce() = runTest(dispatcher) {
+        val viewModel = viewModel()
+
+        viewModel.effects.test {
+            viewModel.onIntent(CameraIntent.ScreenShown)
+            expectNoEvents()
+            viewModel.onIntent(CameraIntent.PermissionChanged(CameraPermission.Unknown))
+            assertEquals(CameraEffect.RequestCameraPermission, awaitItem())
+            viewModel.onIntent(CameraIntent.ScreenHidden)
+            viewModel.onIntent(CameraIntent.ScreenShown)
+            viewModel.onIntent(CameraIntent.PermissionChanged(CameraPermission.Unknown))
+            advanceUntilIdle()
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun aCameraAlreadyAllowedOrRefusedIsNotAskedForByItself() = runTest(dispatcher) {
+        val viewModel = viewModel()
+
+        viewModel.effects.test {
+            viewModel.onIntent(CameraIntent.PermissionChanged(CameraPermission.Granted))
+            viewModel.onIntent(CameraIntent.ScreenShown)
+            viewModel.onIntent(CameraIntent.PermissionChanged(CameraPermission.PermanentlyDenied))
+            advanceUntilIdle()
+            expectNoEvents()
+        }
+    }
+
+    @Test
     fun theSystemActionsAreAskedForOnce() = runTest(dispatcher) {
         val viewModel = viewModel()
 

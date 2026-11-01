@@ -35,3 +35,4 @@ cosa. Solo el dueño pasa una propuesta a aceptada.
 | [0008](0008-el-sistema-de-diseno.md) | El sistema de diseño «Tinta y sudor» | Propuesta |
 | [0009](0009-navegacion-tipada.md) | Navigation Compose con rutas tipadas y una sola actividad | Propuesta |
 | [0010](0010-demostracion-y-simulador.md) | Las herramientas de depuración (arranque de demostración, contador de fotogramas) y Vision en el simulador | Propuesta |
+| [0011](0011-lo-que-tiene-que-hacer-la-app.md) | Lo que tiene que hacer la app: la cámara de selfies al arrancar, cinco personajes y el aspecto de «Ya me vi Baki» | Aceptada en el qué; propuesta en el cómo |

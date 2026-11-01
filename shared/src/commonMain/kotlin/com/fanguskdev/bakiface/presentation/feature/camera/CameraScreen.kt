@@ -180,6 +180,8 @@ fun CameraScreen(
 ) {
     Box(Modifier.fillMaxSize().background(Ink)) {
         when {
+            // The system is asking for the camera: the viewfinder waits, black, under its dialog (ADR 0011).
+            state.permission == CameraPermission.Unknown -> Unit
             state.permission != CameraPermission.Granted -> PermissionPanel(state.permission, onIntent)
             state.status == CameraStatus.Unavailable -> StatusPanel(
                 title = Res.string.camera_unavailable_title,
@@ -480,7 +482,13 @@ private fun PanelScaffold(title: String, body: String, actions: @Composable () -
 @Composable
 private fun PermissionPreview() {
     BakiFaceTheme(darkTheme = false) {
-        CameraScreen(state = CameraUiState(), snackbar = remember { SnackbarHostState() }, onIntent = {})
+        CameraScreen(
+            state = CameraUiState(permission = CameraPermission.Denied),
+            snackbar = remember {
+                SnackbarHostState()
+            },
+            onIntent = {},
+        )
     }
 }
 

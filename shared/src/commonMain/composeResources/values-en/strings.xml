@@ -51,21 +51,13 @@
     <string name="effect_original_name">Your face</string>
     <string name="effect_original_alias">No effect</string>
     <string name="effect_baki_alias">The champion</string>
-    <string name="effect_baki_description">A determined stare, a firm jaw and the marks of a thousand fights.</string>
+    <string name="effect_baki_description">Blank eyes, a face carved in folds and a savage grin. Open your mouth and see.</string>
     <string name="effect_yujiro_alias">The Ogre</string>
-    <string name="effect_yujiro_description">Furious brows, a demon\'s grin and veins about to burst. Open your mouth and see.</string>
+    <string name="effect_yujiro_description">Blank eyes, inked brows, a demon\'s grin and veins about to burst. Open your mouth and see.</string>
     <string name="effect_jack_alias">The biter</string>
     <string name="effect_jack_description">A colossal jaw and stitched scars. Open your mouth to bite.</string>
     <string name="effect_hanayama_alias">The yakuza</string>
     <string name="effect_hanayama_description">A broad face, a calm stare and scars from a hundred bare-knuckle fights.</string>
     <string name="effect_oliva_alias">Mr. Unchained</string>
     <string name="effect_oliva_description">A bull neck, a broad face, a thick moustache and a huge smile.</string>
-    <string name="effect_doppo_alias">The tiger</string>
-    <string name="effect_doppo_description">A wide nose, a square jaw and one eye shut by a scar.</string>
-    <string name="effect_retsu_alias">The kenpo master</string>
-    <string name="effect_retsu_description">Sharp features, high cheekbones and a hawk\'s stare.</string>
-    <string name="effect_kaku_alias">The centenarian</string>
-    <string name="effect_kaku_description">Over a century on your face: wrinkles, long brows and a white moustache.</string>
-    <string name="effect_pickle_alias">The primitive man</string>
-    <string name="effect_pickle_description">A low forehead, stony brows, a wide nose and a Jurassic jaw.</string>
 </resources>

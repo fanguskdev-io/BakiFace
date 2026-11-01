@@ -10,21 +10,18 @@ venas, arrugas, pelo) hasta que te pareces a él. En vivo con la cámara, o sobr
 
 ## Lo que hace
 
-- **Cámara a pantalla completa** con los personajes en un carrusel alrededor del obturador, como los filtros de
-  Instagram. El efecto sigue a la cara en vivo; con la cámara frontal o la trasera.
-- **Nueve personajes**, cada uno con su forma de cambiar la cara:
+- **La cámara de selfies al abrirla**, a pantalla completa, con los personajes en un carrusel alrededor del obturador,
+  como los filtros de Instagram. El efecto sigue a la cara en vivo, y el botón del medio hace el selfie con él.
+- **Cinco personajes**, en el carrusel y en este orden, con el aspecto de la tendencia «Ya me vi Baki»: la cara tallada
+  en pliegues, cada uno con lo suyo ([ADR 0011](docs/adr/0011-lo-que-tiene-que-hacer-la-app.md)):
 
   | Personaje | Qué le pasa a tu cara |
   |---|---|
-  | Baki Hanma | Mirada decidida, mandíbula firme y las marcas de mil combates |
-  | Yujiro Hanma | Cejas de furia, sonrisa de demonio y venas a punto de estallar; abre la boca y verás |
+  | Yujiro Hanma | Ojos en blanco, cejas de tinta, sonrisa de demonio y venas a punto de estallar; abre la boca y verás |
+  | Baki Hanma | Ojos en blanco, la cara tallada en pliegues y una sonrisa salvaje; abre la boca y verás |
   | Jack Hanma | Una mandíbula descomunal y cicatrices cosidas; abre la boca para morder |
-  | Kaoru Hanayama | Cara ancha, mirada tranquila y cicatrices de cien peleas sin guantes |
   | Biscuit Oliva | Cuello de toro, cara ancha, bigote espeso y una sonrisa enorme |
-  | Doppo Orochi | Nariz ancha, mandíbula cuadrada y un ojo cerrado por una cicatriz |
-  | Retsu Kaioh | Rasgos afilados, pómulos altos y una mirada de halcón |
-  | Kaku Kaioh | Más de un siglo en tu cara: arrugas, cejas largas y un bigote blanco |
-  | Pickle | Frente baja, cejas de piedra, nariz ancha y una mandíbula jurásica |
+  | Kaoru Hanayama | Cara ancha, mirada tranquila y cicatrices de cien peleas sin guantes |
 
 - **Editor de fotos**: la foto que haces o una de tu galería, con cualquier personaje y su intensidad de 0 a 100 %.
   Se guarda en la galería o se comparte.
@@ -100,7 +97,7 @@ En el simulador de iOS, con la app ya instalada:
 xcrun simctl launch booted com.fanguskdev.bakiface.BakiFace -demoPhoto /ruta/absoluta/foto.jpg -demoEffect yujiro
 ```
 
-Los personajes se llaman `baki`, `yujiro`, `jack`, `hanayama`, `oliva`, `doppo`, `retsu`, `kaku` y `pickle`. En el
+Los personajes se llaman `yujiro`, `baki`, `jack`, `oliva` y `hanayama`. En el
 simulador, Vision no encuentra bien los puntos de la cara y la app usa una cara media; en un iPhone, nunca.
 
 ## La puerta de calidad

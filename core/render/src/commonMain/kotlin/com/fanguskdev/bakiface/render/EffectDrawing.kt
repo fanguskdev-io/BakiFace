@@ -76,8 +76,20 @@ private fun DrawScope.drawMark(mark: SkinMark) {
     val color = mark.color.toColor()
     when (mark) {
         is SkinMark.Line -> drawLineMark(mark, color, blendMode)
+        is SkinMark.Fill -> drawFillMark(mark, color, blendMode)
         is SkinMark.Spot -> drawSpot(mark, color, blendMode)
     }
+}
+
+private fun DrawScope.drawFillMark(mark: SkinMark.Fill, color: Color, blendMode: BlendMode) {
+    val points = mark.points
+    if (points.size < 3 || mark.alpha <= 0f) return
+    val path = Path().apply {
+        moveTo(points[0].x, points[0].y)
+        for (index in 1 until points.size) lineTo(points[index].x, points[index].y)
+        close()
+    }
+    drawPath(path = path, color = color, alpha = mark.alpha.coerceAtMost(1f), blendMode = blendMode)
 }
 
 private fun DrawScope.drawLineMark(mark: SkinMark.Line, color: Color, blendMode: BlendMode) {

@@ -9,6 +9,7 @@ import com.fanguskdev.bakiface.domain.effect.EffectHint
 import com.fanguskdev.bakiface.domain.effect.EffectId
 import com.fanguskdev.bakiface.domain.effect.Feature
 import com.fanguskdev.bakiface.domain.effect.FeaturePoint
+import com.fanguskdev.bakiface.domain.effect.FoldRegion
 import com.fanguskdev.bakiface.domain.effect.MarkBlend
 import com.fanguskdev.bakiface.domain.effect.MarkSpec
 import com.fanguskdev.bakiface.domain.effect.Side
@@ -110,6 +111,23 @@ internal object EffectMapper {
                 mirrored = dto.mirrored,
                 mouthOpenBoost = dto.boost,
             )
+            "folds" -> MarkSpec.Folds(
+                region = dto.region?.let { foldRegionsByWireName[it] } ?: fail("region", dto.region),
+                count = dto.count.takeIf { it > 0 } ?: fail("count", dto.count),
+                depth = dto.depth,
+                mouthOpenBoost = dto.boost,
+            )
+            "blank_eyes" -> MarkSpec.BlankEyes(
+                color = dto.color?.let(::color) ?: fail("color", dto.color),
+                alpha = dto.alpha,
+                mouthOpenBoost = dto.boost,
+            )
+            "ink_brows" -> MarkSpec.InkBrows(
+                width = dto.width.takeIf { it > 0f } ?: fail("width", dto.width),
+                color = dto.color?.let(::color) ?: fail("color", dto.color),
+                alpha = dto.alpha,
+                mouthOpenBoost = dto.boost,
+            )
             else -> fail("type", dto.type)
         }
     }
@@ -127,6 +145,10 @@ internal object EffectMapper {
         Feature.entries.associateBy { it.name.replace(Regex("([a-z])([A-Z])"), "$1_$2").lowercase() }
 
     private fun feature(name: String): Feature? = featuresByWireName[name]
+
+    /** `CrowsFeet` is written `crows_feet` in the catalogue. */
+    private val foldRegionsByWireName: Map<String, FoldRegion> =
+        FoldRegion.entries.associateBy { it.name.replace(Regex("([a-z])([A-Z])"), "$1_$2").lowercase() }
 
     private fun side(name: String): Side? = Side.entries.firstOrNull { it.name.lowercase() == name }
 

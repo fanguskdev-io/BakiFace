@@ -53,6 +53,7 @@ internal data class PointDto(
 @Serializable
 internal data class MarkDto(
     val type: String,
+    val region: String? = null,
     val path: List<PointDto> = emptyList(),
     val at: PointDto? = null,
     val from: PointDto? = null,

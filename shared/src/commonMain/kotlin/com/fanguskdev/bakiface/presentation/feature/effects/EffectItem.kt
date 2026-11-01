@@ -10,22 +10,14 @@ import com.fanguskdev.bakiface.domain.effect.EffectId
 import com.fanguskdev.bakiface.presentation.resources.Res
 import com.fanguskdev.bakiface.presentation.resources.effect_baki_alias
 import com.fanguskdev.bakiface.presentation.resources.effect_baki_description
-import com.fanguskdev.bakiface.presentation.resources.effect_doppo_alias
-import com.fanguskdev.bakiface.presentation.resources.effect_doppo_description
 import com.fanguskdev.bakiface.presentation.resources.effect_hanayama_alias
 import com.fanguskdev.bakiface.presentation.resources.effect_hanayama_description
 import com.fanguskdev.bakiface.presentation.resources.effect_jack_alias
 import com.fanguskdev.bakiface.presentation.resources.effect_jack_description
-import com.fanguskdev.bakiface.presentation.resources.effect_kaku_alias
-import com.fanguskdev.bakiface.presentation.resources.effect_kaku_description
 import com.fanguskdev.bakiface.presentation.resources.effect_oliva_alias
 import com.fanguskdev.bakiface.presentation.resources.effect_oliva_description
 import com.fanguskdev.bakiface.presentation.resources.effect_original_alias
 import com.fanguskdev.bakiface.presentation.resources.effect_original_name
-import com.fanguskdev.bakiface.presentation.resources.effect_pickle_alias
-import com.fanguskdev.bakiface.presentation.resources.effect_pickle_description
-import com.fanguskdev.bakiface.presentation.resources.effect_retsu_alias
-import com.fanguskdev.bakiface.presentation.resources.effect_retsu_description
 import com.fanguskdev.bakiface.presentation.resources.effect_yujiro_alias
 import com.fanguskdev.bakiface.presentation.resources.effect_yujiro_description
 import com.fanguskdev.bakiface.render.toColor
@@ -57,15 +49,11 @@ fun Effect.toItem(): EffectItem = EffectItem(id = id, name = name, kanji = kanji
 val EffectItem.accentColor: Color get() = accent.toColor()
 
 private val texts: Map<String, Pair<StringResource, StringResource>> = mapOf(
-    "baki" to (Res.string.effect_baki_alias to Res.string.effect_baki_description),
     "yujiro" to (Res.string.effect_yujiro_alias to Res.string.effect_yujiro_description),
+    "baki" to (Res.string.effect_baki_alias to Res.string.effect_baki_description),
     "jack" to (Res.string.effect_jack_alias to Res.string.effect_jack_description),
-    "hanayama" to (Res.string.effect_hanayama_alias to Res.string.effect_hanayama_description),
     "oliva" to (Res.string.effect_oliva_alias to Res.string.effect_oliva_description),
-    "doppo" to (Res.string.effect_doppo_alias to Res.string.effect_doppo_description),
-    "retsu" to (Res.string.effect_retsu_alias to Res.string.effect_retsu_description),
-    "kaku" to (Res.string.effect_kaku_alias to Res.string.effect_kaku_description),
-    "pickle" to (Res.string.effect_pickle_alias to Res.string.effect_pickle_description),
+    "hanayama" to (Res.string.effect_hanayama_alias to Res.string.effect_hanayama_description),
 )
 
 /** The name to show: the character's, or "your face" for the [EffectItem.Original]. */
