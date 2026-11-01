@@ -9,10 +9,15 @@
 
 ## Contexto
 
-Las versiones estables más recientes, comprobadas en Maven Central y en el Maven de Google el 2026-11-01: Kotlin 2.4.21,
-Compose Multiplatform 1.12.2, AGP 9.1.1, Gradle 9.5.1, CameraX 1.6.2, ML Kit face-detection 16.1.7, Koin 4.2.2,
-Navigation Compose 2.10.0, DataStore 1.3.0, coroutines 1.11.0, kotlinx.serialization 1.12.0, kotlinx-collections-immutable
-0.5.2, Turbine 1.2.1, Robolectric 4.17, Kover 0.9.11 y el plugin de ktlint 14.2.0.
+Las versiones estables más recientes, comprobadas en Maven Central, en el Maven de Google, en el portal de plugins de
+Gradle y en services.gradle.org el 2026-11-01: Kotlin 2.4.21, Compose Multiplatform 1.12.2, AGP 9.5.0, Gradle 9.8.2,
+CameraX 1.6.2, ML Kit face-detection 16.1.7, Koin 4.2.2, Navigation Compose 2.10.0, DataStore 1.3.0, coroutines 1.11.0,
+kotlinx.serialization 1.12.0, kotlinx-collections-immutable 0.5.2, Turbine 1.2.1, Robolectric 4.17, Kover 0.9.11 y el
+plugin de ktlint 14.2.0.
+
+AGP y Gradle llegaron de la plantilla en 9.1.1 y 9.5.1 y se dieron por buenos sin comprobarlos; los delató el aviso de
+la primera ejecución de la CI. AGP 9.5.0 pide Gradle 9.6.0 o posterior, y el Android Studio del dueño (compilación
+262.10968.63) trae las herramientas de AGP 9.5.0, así que lo abre sin quejarse.
 
 ## Decisión
 
@@ -30,6 +35,9 @@ Navigation Compose 2.10.0, DataStore 1.3.0, coroutines 1.11.0, kotlinx.serializa
 |---|---|---|
 | Material 3 1.12.0-alpha03 de la plantilla | Va a la par de Compose 1.12 | Es alfa; el dueño pidió versiones estables |
 | minSdk 24 de la plantilla | Más teléfonos | Pide el permiso de almacenamiento y su flujo para guardar en Android 7–9 |
+
+- **AGP no puede pasar del Android Studio del dueño**: uno más nuevo de lo que conoce el IDE rompe la sincronización.
+  Antes de subirlo se mira `buildVersion` en `plugins/android/lib/libagp-version.jar` del Android Studio instalado.
 
 ## Qué nos haría cambiar de opinión
 
